@@ -3,10 +3,11 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 
-import scrapy
-from scrapy import Field
+from scrapy import Item, Field
 
-class StackoverflowItem(scrapy.Item):
+
+class StackoverflowItem(Item):
+
     stack_question_id = Field()
     question_title = Field()
     question_content = Field()
@@ -19,5 +20,8 @@ class StackoverflowItem(scrapy.Item):
     answers = Field()
     user = Field()
     question_comments = Field()
+
+    def __str__(self):
+        return ""
 
     pass

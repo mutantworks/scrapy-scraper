@@ -5,6 +5,9 @@
 
 
 # useful for handling different item types with a single interface
+import json
+
+from itemadapter import ItemAdapter
 from sqlalchemy import update
 from sqlalchemy.orm import sessionmaker
 from stackoverflow.models import db_connect, create_table, User, Tag, Question, Answer, QuestionComment, AnswerComment
@@ -20,8 +23,19 @@ class StackoverflowPipeline:
         create_table(engine)
         self.Session = sessionmaker(bind=engine)
 
+    def open_spider(self, spider):
+        self.file = open('questions.json', 'w')
+
+    def close_spider(self, spider):
+        self.file.close()
+
     def process_item(self, item, spider):
 
+        # Write item to json file.
+        line = json.dumps(ItemAdapter(item).asdict(), indent=4) + "\n"
+        self.file.write(line)
+
+        # Write iterm to DB.
         session = self.Session()
         question = Question()
         question_user = User()

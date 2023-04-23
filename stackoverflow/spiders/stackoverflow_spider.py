@@ -3,12 +3,12 @@ from stackoverflow.items import StackoverflowItem
 
 import scrapy
 
+
 class StackOverflow(scrapy.Spider):
     name = "stackoverflowspider"
     start_urls = ["https://stackoverflow.com/questions/tagged/"]
 
     def __init__(self, domain='', *args, **kwargs):
-        self.logger.info(f"DOMAIN : {domain}")
         if domain is not None:
             self.start_urls[0] = self.start_urls[0] + domain
         else:
@@ -103,8 +103,6 @@ class StackOverflow(scrapy.Spider):
 
         answers = list()
         anss = response.css('.js-answer')
-
-        self.logger.info(f"TOTAL ANSWER : {len(anss)}")
 
         for a in anss:
             try:

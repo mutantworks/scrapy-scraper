@@ -17,7 +17,6 @@ class StackOverflow(scrapy.Spider):
 
     def parse(self, response):
         questions = response.css('.js-post-summary')
-        self.logger.info(f"SCRAPPED QUESTIONS : {len(questions)}")
 
         for q in questions:
             stack_question_id = q.css('.s-link::attr(href)').extract_first().split("/")[2]
